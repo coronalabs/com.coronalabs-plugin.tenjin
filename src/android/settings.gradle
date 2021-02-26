@@ -1,0 +1,2 @@
+rootProject.name = "Tenjin Plugin"
+include("app", "plugin")

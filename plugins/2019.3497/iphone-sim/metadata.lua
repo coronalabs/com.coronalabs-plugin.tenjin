@@ -9,7 +9,7 @@ local metadata =
 		staticLibs = { "TenjinPlugin", "TenjinSDKUniversal" }, 
 
 		frameworks = { "AdSupport", "StoreKit" },
-		frameworksOptional = {},
+		frameworksOptional = { "AppTrackingTransparency", },
 	}
 }
 

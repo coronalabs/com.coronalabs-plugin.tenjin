@@ -1,0 +1,35 @@
+settings =
+{
+	orientation =
+	{
+		default = "portrait",
+		supported = { "portrait" }
+	},
+
+	iphone =
+	{
+	xcassets = "Images.xcassets",
+	plist =
+	{
+		UILaunchStoryboardName = "LaunchScreen",
+		}
+	},
+
+	android =
+	{
+		usesPermissions =
+		{
+			"android.permission.INTERNET",
+			"android.permission.ACCESS_NETWORK_STATE"
+		}
+	},
+
+	plugins =
+	{
+		["plugin.tenjin"] =
+		{
+			publisherId = "com.coronalabs",
+			supportedPlatforms = { iphone = true, android = true, ["iphone-sim"] = true }
+		}
+	}
+}
