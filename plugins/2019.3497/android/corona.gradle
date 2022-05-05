@@ -1,5 +1,8 @@
-
+android.defaultConfig {
+    minSdkVersion Math.max(minSdkVersion?.apiLevel ?: 15, 21)
+}
+ext["minSdkVersion"] = Math.max(ext.find("minSdkVersion")?:15, 21)
 
 dependencies {
-	implementation 'com.android.installreferrer:installreferrer:1.0'
+	implementation "com.android.installreferrer:installreferrer:2.2"
 }

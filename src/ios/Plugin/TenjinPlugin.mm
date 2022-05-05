@@ -1,10 +1,3 @@
-//
-//  TenjinPlugin.mm
-//  Tenjin Plugin
-//
-//  Copyright (c) 2016 Corona Labs Inc. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
@@ -33,8 +26,8 @@
 // ----------------------------------------------------------------------------
 
 #define PLUGIN_NAME        "plugin.tenjin"
-#define PLUGIN_VERSION     "1.0.9"
-#define PLUGIN_SDK_VERSION "1.9.1" // no API function to get SDK version (yet)
+#define PLUGIN_VERSION     "1.1.0"
+#define PLUGIN_SDK_VERSION "1.12.14" // no API function to get SDK version (yet)
 
 static const char EVENT_NAME[]    = "analyticsRequest";
 static const char PROVIDER_NAME[] = "tenjin";

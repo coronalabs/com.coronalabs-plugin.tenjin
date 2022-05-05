@@ -41,8 +41,8 @@ import com.tenjin.android.Callback;
  */
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     private static final String PLUGIN_NAME = "plugin.tenjin";
-    private static final String PLUGIN_VERSION = "1.1.2";
-    private static final String PLUGIN_SDK_VERSION = "1.8.7"; // no API function to get SDK version (yet)
+    private static final String PLUGIN_VERSION = "1.2.0";
+    private static final String PLUGIN_SDK_VERSION = "1.12.14"; // no API function to get SDK version (yet)
 
     private static final String EVENT_NAME = "analyticsRequest";
     private static final String PROVIDER_NAME = "tenjin";
