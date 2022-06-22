@@ -8,8 +8,8 @@ local metadata =
 		-- In this case, the static library is called: libSTATIC_LIB_NAME.a
 		staticLibs = { "plugin_tenjin", "TenjinSDKUniversal" },
 
-		frameworks = { "AdSupport", "StoreKit", "AdServices" },
-		frameworksOptional = { "AppTrackingTransparency", },
+		frameworks = { "AdSupport", "StoreKit" },
+		frameworksOptional = { "AppTrackingTransparency","AdServices" },
 	}
 }
 
