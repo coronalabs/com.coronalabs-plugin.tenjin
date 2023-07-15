@@ -24,6 +24,7 @@ import com.naef.jnlua.NamedJavaFunction;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import android.os.Handler;
 import android.util.Log;
@@ -42,7 +43,7 @@ import com.tenjin.android.Callback;
 public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
     private static final String PLUGIN_NAME = "plugin.tenjin";
     private static final String PLUGIN_VERSION = "1.2.1";
-    private static final String PLUGIN_SDK_VERSION = "1.12.16"; // no API function to get SDK version (yet)
+    private static final String PLUGIN_SDK_VERSION = "1.12.21"; // no API function to get SDK version (yet)
 
     private static final String EVENT_NAME = "analyticsRequest";
     private static final String PROVIDER_NAME = "tenjin";
@@ -116,6 +117,7 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                 new LogEvent(),
                 new LogPurchase(),
                 new GetDeepLink(),
+                new SetCustomerUserId(),
                 new NamedJavaFunction() {
                     @Override
                     public String getName() {
@@ -626,6 +628,76 @@ public class LuaLoader implements JavaFunction, CoronaRuntimeListener {
                         coronaEvent.put(EVENT_PHASE_KEY, PHASE_RECORDED);
                         coronaEvent.put(EVENT_TYPE_KEY, TYPE_STANDARD);
                         dispatchLuaEvent(coronaEvent, coronaListener);
+                    }
+                };
+
+                coronaActivity.runOnUiThread(runnableActivity);
+            }
+
+            return 0;
+        }
+    }
+
+
+    // [Lua] logEvent(event [, value])
+    private class SetCustomerUserId implements NamedJavaFunction {
+        /**
+         * Gets the name of the Lua function as it would appear in the Lua script.
+         *
+         * @return Returns the name of the custom Lua function.
+         */
+        @Override
+        public String getName() {
+            return "setCustomerUserId";
+        }
+
+        /**
+         * This method is called when the Lua function is called.
+         * <p>
+         * Warning! This method is not called on the main UI thread.
+         *
+         * @param luaState Reference to the Lua state.
+         *                 Needed to retrieve the Lua function's parameters and to return values back to Lua.
+         * @return Returns the number of values to be returned by the Lua function.
+         */
+        @Override
+        public int invoke(LuaState luaState) {
+            functionSignature = "tenjin.setCustomerUserId(userId)";
+
+            if (!isSDKInitialized()) {
+                return 0;
+            }
+
+            String userId = null;
+
+            // check number or args
+            int nargs = luaState.getTop();
+            if (nargs < 1 || nargs > 1) {
+                logMsg(ERROR_MSG, "Expected 1 argument, got " + nargs);
+                return 0;
+            }
+
+            // get event name
+            if (luaState.type(1) == LuaType.STRING) {
+                userId = luaState.toString(1);
+            } else {
+                logMsg(ERROR_MSG, "userId (string) expected, got " + luaState.typeName(1));
+                return 0;
+            }
+
+
+            // declare final variables for inner loop
+            final CoronaActivity coronaActivity = CoronaEnvironment.getCoronaActivity();
+            final String fUserId = userId;
+
+            if (coronaActivity != null) {
+                Runnable runnableActivity = new Runnable() {
+                    public void run() {
+                        // get the tenjin instance
+                        TenjinSDK instance = (TenjinSDK) tenjinObjects.get(TENJIN_INSTANCE);
+
+                        instance.setCustomerUserId(fUserId);
+
                     }
                 };
 
